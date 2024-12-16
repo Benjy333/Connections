@@ -1,64 +1,87 @@
-// Select all tiles and the "Correct Answers" area
-const tiles = document.querySelectorAll('.tile');  // Selects all .tile elements
-const correctAnswers = document.getElementById('correct-answers');
-let selectedTiles = [];
+// Local Game Data: Words and Categories
+const wordData = [
+  { word: "Apple", category: "Fruits" },
+  { word: "Banana", category: "Fruits" },
+  { word: "Carrot", category: "Vegetables" },
+  { word: "Broccoli", category: "Vegetables" },
+  { word: "Shark", category: "Animals" },
+  { word: "Tiger", category: "Animals" },
+  { word: "Guitar", category: "Instruments" },
+  { word: "Drum", category: "Instruments" },
+  { word: "Orange", category: "Fruits" },
+  { word: "Piano", category: "Instruments" },
+  { word: "Lion", category: "Animals" },
+  { word: "Potato", category: "Vegetables" },
+  { word: "Flute", category: "Instruments" },
+  { word: "Whale", category: "Animals" },
+  { word: "Tomato", category: "Fruits" },
+  { word: "Cabbage", category: "Vegetables" }
+];
 
-// Function to handle tile selection
-function toggleSelection(tile) {
-    if (tile.classList.contains("selected")) {
-        tile.classList.remove("selected");
-        selectedTiles = selectedTiles.filter(t => t !== tile);
-    } else if (selectedTiles.length < 4) {
-        tile.classList.add("selected");
-        selectedTiles.push(tile);
-    }
+// Shuffle Words for Display
+const shuffledWords = wordData.sort(() => Math.random() - 0.5);
 
-    if (selectedTiles.length === 4) {
-        checkGroup();
-    }
+// Word Selection Logic
+const wordGrid = document.getElementById("word-grid");
+const resultsDiv = document.getElementById("results");
+let selectedWords = [];
+
+// Populate Word Grid
+function createWordGrid() {
+  shuffledWords.forEach(item => {
+    const wordDiv = document.createElement("div");
+    wordDiv.className = "word";
+    wordDiv.textContent = item.word;
+
+    wordDiv.addEventListener("click", () => toggleWordSelection(wordDiv, item));
+    wordGrid.appendChild(wordDiv);
+  });
 }
 
-// Check if the selected group is correct
-function checkGroup() {
-    const words = selectedTiles.map(tile => tile.textContent);
-
-    const correctGroups = [
-        ["Word 1", "Word 2", "Word 3", "Word 4"],
-        ["Word 5", "Word 6", "Word 7", "Word 8"]
-    ];
-
-    const isCorrect = correctGroups.some(group =>
-        group.every(word => words.includes(word))
-    );
-
-    if (isCorrect) {
-        moveTilesToBottom();
-    } else {
-        alert("Incorrect group! Try again.");
-        resetSelection();
-    }
+// Toggle Word Selection
+function toggleWordSelection(wordDiv, wordItem) {
+  if (selectedWords.includes(wordItem)) {
+    selectedWords = selectedWords.filter(w => w !== wordItem);
+    wordDiv.classList.remove("selected");
+  } else {
+    selectedWords.push(wordItem);
+    wordDiv.classList.add("selected");
+  }
 }
 
-// Animate tiles to move them to the "Correct Answers" section
-function moveTilesToBottom() {
-    selectedTiles.forEach(tile => {
-        tile.classList.add("correct-group");
-        setTimeout(() => {
-            tile.classList.remove("selected", "correct-group");
-            correctAnswers.appendChild(tile);
-        }, 800); 
-    });
+// Check for Correct Grouping
+document.getElementById("submit-btn").addEventListener("click", checkGroups);
 
-    selectedTiles = [];
+function checkGroups() {
+  if (selectedWords.length !== 4) {
+    resultsDiv.textContent = "Select exactly 4 words to form a group.";
+    resultsDiv.style.color = "red";
+    return;
+  }
+
+  const categories = selectedWords.map(w => w.category);
+  const uniqueCategories = new Set(categories);
+
+  if (uniqueCategories.size === 1) {
+    resultsDiv.textContent = `Correct! The group is: ${categories[0]}`;
+    resultsDiv.style.color = "green";
+    // Clear the selected words after a correct group
+    clearSelectedWords();
+  } else {
+    resultsDiv.textContent = "Incorrect grouping. Try again!";
+    resultsDiv.style.color = "red";
+  }
 }
 
-// Reset selection if the group is incorrect
-function resetSelection() {
-    selectedTiles.forEach(tile => tile.classList.remove("selected"));
-    selectedTiles = [];
+function clearSelectedWords() {
+  selectedWords.forEach(wordItem => {
+    const wordDivs = Array.from(document.getElementsByClassName("word"));
+    const wordDiv = wordDivs.find(div => div.textContent === wordItem.word);
+    wordDiv.classList.remove("selected");
+  });
+  selectedWords = [];
 }
 
-// Attach event listeners to tiles
-tiles.forEach(tile => {
-    tile.addEventListener("click", () => toggleSelection(tile));
-});
+// Initialize Game
+createWordGrid();
+
