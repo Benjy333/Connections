@@ -1,58 +1,45 @@
-/* Basic reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Body and game container styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    text-align: center;
-    padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f9;
 }
 
 h1 {
-    margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-#game-board {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 40px;
+#word-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 20px auto;
+  max-width: 500px;
 }
 
-h2 {
-    margin-top: 30px;
+.word {
+  background-color: #ffffff;
+  border: 2px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-/* Style for each tile */
-.tile {
-    background-color: #4CAF50;
-    color: white;
-    font-size: 18px;
-    padding: 20px;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+.word.selected {
+  background-color: #0fccce;
+  color: #fff;
 }
 
-/* Tile hover effect */
-.tile:hover {
-    background-color: #45a049;
+#submit-btn {
+  margin: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-/* Tile selection styles */
-.tile.selected {
-    background-color: #f39c12;
-    transform: scale(1.1);
+#results {
+  font-weight: bold;
+  color: green;
 }
 
-/* Correct group style (animation) */
-.tile.correct-group {
-    background-color: #2
