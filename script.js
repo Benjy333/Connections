@@ -82,6 +82,23 @@ function clearSelectedWords() {
   selectedWords = [];
 }
 
+function selectWord(div, word) {
+  // Toggle the 'selected' class
+  if (div.classList.contains('selected')) {
+    div.classList.remove('selected');
+    // Remove word from selectedWords
+    selectedWords = selectedWords.filter(w => w !== word);
+  } else {
+    div.classList.add('selected');
+    // Add word to selectedWords
+    selectedWords.push(word);
+  }
+
+  console.log("Selected Words:", selectedWords); // Debug log
+  checkCorrectSelection(); // Check if selection matches a group
+}
+
+
 // Initialize Game
 createWordGrid();
 
