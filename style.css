@@ -18,6 +18,13 @@ h1 {
   max-width: 500px;
 }
 
+/* Highlight selected words */
+.grid-item.selected {
+  background-color: lightblue;
+  border: 2px solid blue;
+  color: white;
+}
+
 .word {
   background-color: #0fccce;
   border: 2px solid #ccc;
