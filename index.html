@@ -3,23 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Word Grouping Game</title>
-  <link rel="stylesheet" href="style.css">
+  <title>NY Connections Game</title>
+  <style>
+    /* Grid and answered section styles */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 20px;
+    }
+    .grid-item {
+      padding: 10px;
+      background-color: lightgray;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid #ccc;
+    }
+    .answered-section {
+      margin-top: 20px;
+      border: 2px solid green;
+      padding: 10px;
+      min-height: 50px;
+    }
+    .answered-word {
+      background-color: lightgreen;
+      padding: 5px;
+      margin: 5px;
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
-  <h1>Local Word Grouping Game</h1>
-  <p>Group the words into 4 categories.</p>
+  <h1>Word Selection Game</h1>
+  <div class="grid" id="grid"></div>
+  <h2>Answered Words:</h2>
+  <div class="answered-section" id="answered"></div>
 
-  <!-- Word Grid -->
-  <div id="word-grid"></div>
+  <script>
+    // Sample words grouped into categories
+    const wordGroups = [
+      ["Apple", "Banana", "Cherry", "Date"],      // Fruits
+      ["Cat", "Dog", "Horse", "Rabbit"],          // Animals
+      ["Red", "Blue", "Green", "Yellow"],         // Colors
+      ["Car", "Bike", "Bus", "Train"]             // Vehicles
+    ];
 
-  <!-- Submit Button -->
-  <button id="submit-btn">Check Groups</button>
+    let selectedWords = [];
+    let answeredWords = [];
+    const grid = document.getElementById('grid');
+    const answeredSection = document.getElementById('answered');
 
-  <!-- Results Display -->
-  <div id="results"></div>
+    // Flatten and shuffle words for the grid
+    const words = wordGroups.flat().sort(() => Math.random() - 0.5);
 
-  <script src="script.js"></script>
+    // Render words into the grid
+    words.forEach((word) => {
+      const div = document.createElement('div');
+      div.classList.add('grid-item');
+      div.textContent = word;
+      div.onclick = () => selectWord(div, word);
+      grid.appendChild(div);
+    });
+
+    // Function to handle word selection
+    function selectWord(div, word) {
+      if (div.classList.contains('selected')) {
+        div.classList.remove('selected');
+        selectedWords = selectedWords.filter(w => w !== word);
+      } else {
+        div.classList.add('selected');
+        selectedWords.push(word);
+      }
+
+      // Check if the selection is correct
+      checkCorrectSelection();
+    }
+
+    // Function to check for correct selections
+    function checkCorrectSelection() {
+      wordGroups.forEach((group) => {
+        if (arraysEqual(selectedWords, group)) {
+          // Move words to the "answered" section
+          group.forEach((word) => {
+            answeredWords.push(word);
+            addToAnsweredSection(word);
+          });
+
+          // Remove words from the grid
+          removeFromGrid(group);
+
+          // Reset the selected words
+          selectedWords = [];
+        }
+      });
+    }
+
+    // Helper function to remove words from the grid
+    function removeFromGrid(wordsToRemove) {
+      const gridItems = document.querySelectorAll('.grid-item');
+      gridItems.forEach((item) => {
+        if (wordsToRemove.includes(item.textContent)) {
+          item.remove();
+        }
+      });
+    }
+
+    // Add a word to the "answered" section
+    function addToAnsweredSection(word) {
+      const wordDiv = document.createElement('div');
+      wordDiv.classList.add('answered-word');
+      wordDiv.textContent = word;
+      answeredSection.appendChild(wordDiv);
+    }
+
+    // Utility function to compare arrays
+    function arraysEqual(a, b) {
+      return a.length === b.length && a.every(value => b.includes(value));
+    }
+  </script>
 </body>
 </html>
-
