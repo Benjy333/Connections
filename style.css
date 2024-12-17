@@ -1,52 +1,35 @@
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 20px;
-  background-color: #808080;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f5f5f5;
+    color: #333;
 }
-
 h1 {
-  margin-bottom: 10px;
+    color: #444;
 }
-
-#word-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin: 20px auto;
-  max-width: 500px;
+#game-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
 }
-
-/* Highlight selected words */
-.grid-item.selected {
-  background-color: lightblue;
-  border: 2px solid blue;
-  color: white;
+.word-card {
+    background-color: #e0e0e0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
-
-.word {
-  background-color: #0fccce;
-  border: 2px solid #ccc;
-  padding: 10px;
-  cursor: pointer;
-  transition: background 0.3s;
+.word-card.selected {
+    background-color: #90caf9;
+    color: white;
 }
-
-.word.selected {
-  background-color: #0fccce;
-  color: #fff;
-}
-
-#submit-btn {
-  margin: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-#results {
-  font-weight: bold;
-  color: green;
+#feedback {
+    font-weight: bold;
+    margin: 10px;
 }
 
