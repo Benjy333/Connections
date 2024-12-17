@@ -19,6 +19,12 @@
       cursor: pointer;
       border: 1px solid #ccc;
     }
+    /* Highlight selected words */
+    .grid-item.selected {
+      background-color: lightblue;
+      border: 2px solid blue;
+      color: white;
+    }
     .answered-section {
       margin-top: 20px;
       border: 2px solid green;
@@ -67,6 +73,7 @@
 
     // Function to handle word selection
     function selectWord(div, word) {
+      // Toggle the 'selected' class
       if (div.classList.contains('selected')) {
         div.classList.remove('selected');
         selectedWords = selectedWords.filter(w => w !== word);
@@ -75,7 +82,7 @@
         selectedWords.push(word);
       }
 
-      // Check if the selection is correct
+      console.log("Selected Words:", selectedWords);
       checkCorrectSelection();
     }
 
