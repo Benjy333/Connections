@@ -1,5 +1,5 @@
 // Local Game Data: Words and Categories
-const wordData = [
+const words = [
   { word: "Apple", category: "Fruits" },
   { word: "Banana", category: "Fruits" },
   { word: "Carrot", category: "Vegetables" },
@@ -18,87 +18,64 @@ const wordData = [
   { word: "Cabbage", category: "Vegetables" }
 ];
 
-// Shuffle Words for Display
-const shuffledWords = wordData.sort(() => Math.random() - 0.5);
+const gameContainer = document.getElementById("game-container");
+const feedback = document.getElementById("feedback");
+const attemptsLeft = document.getElementById("attempts");
+const submitButton = document.getElementById("submit-btn");
 
-// Word Selection Logic
-const wordGrid = document.getElementById("word-grid");
-const resultsDiv = document.getElementById("results");
 let selectedWords = [];
+let attempts = 4;
 
-// Populate Word Grid
-function createWordGrid() {
-  shuffledWords.forEach(item => {
-    const wordDiv = document.createElement("div");
-    wordDiv.className = "word";
-    wordDiv.textContent = item.word;
+// Shuffle words and render them
+const shuffledWords = words.sort(() => Math.random() - 0.5);
 
-    wordDiv.addEventListener("click", () => toggleWordSelection(wordDiv, item));
-    wordGrid.appendChild(wordDiv);
-  });
+shuffledWords.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "word-card";
+    div.textContent = item.word;
+    div.addEventListener("click", () => toggleSelection(div, item));
+    gameContainer.appendChild(div);
+});
+
+function toggleSelection(div, word) {
+    if (div.classList.contains("selected")) {
+        div.classList.remove("selected");
+        selectedWords = selectedWords.filter(w => w.word !== word.word);
+    } else if (selectedWords.length < 4) {
+        div.classList.add("selected");
+        selectedWords.push(word);
+    }
 }
 
-// Toggle Word Selection
-function toggleWordSelection(wordDiv, wordItem) {
-  if (selectedWords.includes(wordItem)) {
-    selectedWords = selectedWords.filter(w => w !== wordItem);
-    wordDiv.classList.remove("selected");
-  } else {
-    selectedWords.push(wordItem);
-    wordDiv.classList.add("selected");
-  }
+submitButton.addEventListener("click", checkGroup);
+
+function checkGroup() {
+    if (selectedWords.length !== 4) {
+        feedback.textContent = "Select exactly 4 words!";
+        return;
+    }
+
+    // Check if all selected words are in the same group
+    const group = selectedWords[0].group;
+    const allMatch = selectedWords.every(word => word.group === group);
+
+    if (allMatch) {
+        feedback.textContent = `Correct! Group: ${group}`;
+        selectedWords.forEach(word => {
+            document.querySelector(`.word-card:contains("${word.word}")`).remove();
+        });
+        selectedWords = [];
+    } else {
+        feedback.textContent = "Incorrect group!";
+        attempts--;
+        attemptsLeft.textContent = attempts;
+        if (attempts === 0) {
+            feedback.textContent = "Game Over! Try again.";
+            submitButton.disabled = true;
+        }
+    }
+
+    // Clear selections
+    document.querySelectorAll(".word-card.selected").forEach(div => div.classList.remove("selected"));
+    selectedWords = [];
 }
-
-// Check for Correct Grouping
-document.getElementById("submit-btn").addEventListener("click", checkGroups);
-
-function checkGroups() {
-  if (selectedWords.length !== 4) {
-    resultsDiv.textContent = "Select exactly 4 words to form a group.";
-    resultsDiv.style.color = "red";
-    return;
-  }
-
-  const categories = selectedWords.map(w => w.category);
-  const uniqueCategories = new Set(categories);
-
-  if (uniqueCategories.size === 1) {
-    resultsDiv.textContent = `Correct! The group is: ${categories[0]}`;
-    resultsDiv.style.color = "green";
-    // Clear the selected words after a correct group
-    clearSelectedWords();
-  } else {
-    resultsDiv.textContent = "Incorrect grouping. Try again!";
-    resultsDiv.style.color = "red";
-  }
-}
-
-function clearSelectedWords() {
-  selectedWords.forEach(wordItem => {
-    const wordDivs = Array.from(document.getElementsByClassName("word"));
-    const wordDiv = wordDivs.find(div => div.textContent === wordItem.word);
-    wordDiv.classList.remove("selected");
-  });
-  selectedWords = [];
-}
-
-function selectWord(div, word) {
-  // Toggle the 'selected' class
-  if (div.classList.contains('selected')) {
-    div.classList.remove('selected');
-    // Remove word from selectedWords
-    selectedWords = selectedWords.filter(w => w !== word);
-  } else {
-    div.classList.add('selected');
-    // Add word to selectedWords
-    selectedWords.push(word);
-  }
-
-  console.log("Selected Words:", selectedWords); // Debug log
-  checkCorrectSelection(); // Check if selection matches a group
-}
-
-
-// Initialize Game
-createWordGrid();
-
