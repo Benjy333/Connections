@@ -38,14 +38,15 @@ shuffledWords.forEach(item => {
 });
 
 function toggleSelection(div, word) {
-  if (div.classList.contains("selected")) {
-    div.classList.remove("selected");
-    selectedWords = selectedWords.filter(w => w.word !== word.word);
-  } else if (selectedWords.length < 4) {
-    div.classList.add("selected");
-    selectedWords.push(word);
-  }
+    if (div.classList.contains("selected")) {
+        div.classList.remove("selected");
+        selectedWords = selectedWords.filter(w => w.word !== word.word);
+    } else if (selectedWords.length < 4) {
+        div.classList.add("selected");
+        selectedWords.push(word);
+    }
 }
+
 
 submitButton.addEventListener("click", checkGroup);
 
