@@ -1,20 +1,20 @@
 const words = [
-  { word: "Test 1", group: "Fruits" },
-  { word: "Banana", group: "Fruits" },
-  { word: "Carrot", group: "Vegetables" },
-  { word: "Broccoli", group: "Vegetables" },
-  { word: "Shark", group: "Animals" },
-  { word: "Tiger", group: "Animals" },
-  { word: "Guitar", group: "Instruments" },
-  { word: "Drum", group: "Instruments" },
-  { word: "Orange", group: "Fruits" },
-  { word: "Piano", group: "Instruments" },
-  { word: "Lion", group: "Animals" },
-  { word: "Potato", group: "Vegetables" },
-  { word: "Flute", group: "Instruments" },
-  { word: "Whale", group: "Animals" },
-  { word: "Tomato", group: "Fruits" },
-  { word: "Cabbage", group: "Vegetables" }
+  { word: "Bluey", group: "Bluey Characters" },
+  { word: "Bingo", group: "Bluey Characters" },
+  { word: "Bandit", group: "Bluey Characters" },
+  { word: "Chilli", group: "Bluey Characters" },
+  { word: "Broncos", group: "Brisbane Teams" },
+  { word: "Dolphins", group: "Brisbane Teams" },
+  { word: "Lions", group: "Brisbane Teams" },
+  { word: "Heat", group: "Brisbane Teams" },
+  { word: "Wallaby", group: "Native Australian Species" },
+  { word: "Platypus", group: "Native Australian Species" },
+  { word: "Kookaburra", group: "Native Australian Species" },
+  { word: "Koala", group: "Native Australian Species" },
+  { word: "Squirrel", group: "Red objects" },
+  { word: "Fox", group: "Red objects" },
+  { word: "Apple", group: "Red objects" },
+  { word: "Cabbage", group: "Red objects" }
 ];
 
 const gameContainer = document.getElementById("game-container");
@@ -61,7 +61,7 @@ function checkGroup() {
     const allMatch = selectedWords.every(word => word.group === group);
 
     if (allMatch) {
-        feedback.textContent = `Correct! Group: ${group}`;
+        feedback.textContent = `Bingo! Group: ${group}`;
         feedback.style.color = "green";
 
         // Add the correct group to the "Correct Answers" section
@@ -78,7 +78,7 @@ function checkGroup() {
 
         selectedWords = [];
     } else {
-        feedback.textContent = "Incorrect group!";
+        feedback.textContent = "Stupid!";
         feedback.style.color = "red";
         attempts--;
         attemptsLeft.textContent = attempts;
