@@ -1,20 +1,20 @@
 const words = [
-  { word: "Test 1", category: "Fruits" },
-  { word: "Banana", category: "Fruits" },
-  { word: "Carrot", category: "Vegetables" },
-  { word: "Broccoli", category: "Vegetables" },
-  { word: "Shark", category: "Animals" },
-  { word: "Tiger", category: "Animals" },
-  { word: "Guitar", category: "Instruments" },
-  { word: "Drum", category: "Instruments" },
-  { word: "Orange", category: "Fruits" },
-  { word: "Piano", category: "Instruments" },
-  { word: "Lion", category: "Animals" },
-  { word: "Potato", category: "Vegetables" },
-  { word: "Flute", category: "Instruments" },
-  { word: "Whale", category: "Animals" },
-  { word: "Tomato", category: "Fruits" },
-  { word: "Cabbage", category: "Vegetables" }
+  { word: "Test 1", group: "Fruits" },
+  { word: "Banana", group: "Fruits" },
+  { word: "Carrot", group: "Vegetables" },
+  { word: "Broccoli", group: "Vegetables" },
+  { word: "Shark", group: "Animals" },
+  { word: "Tiger", group: "Animals" },
+  { word: "Guitar", group: "Instruments" },
+  { word: "Drum", group: "Instruments" },
+  { word: "Orange", group: "Fruits" },
+  { word: "Piano", group: "Instruments" },
+  { word: "Lion", group: "Animals" },
+  { word: "Potato", group: "Vegetables" },
+  { word: "Flute", group: "Instruments" },
+  { word: "Whale", group: "Animals" },
+  { word: "Tomato", group: "Fruits" },
+  { word: "Cabbage", group: "Vegetables" }
 ];
 
 const gameContainer = document.getElementById("game-container");
