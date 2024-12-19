@@ -3,20 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connections Game</title>
+    <title>Bens Connections Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Connections Game</h1>
     <p>Group the words into 4 categories!</p>
 
-    <div id="game-container"></div>
+    <!-- Game Container -->
+    <div id="game-container">
+        <!-- Words will be dynamically added here -->
+    </div>
+
     <p id="feedback"></p>
     <button id="submit-btn">Submit Group</button>
     <p>Attempts Left: <span id="attempts">4</span></p>
 
     <h2>Correct Answers</h2>
-    <div id="correct-answers"></div>
+    <div id="correct-answers">
+        <!-- Correct groups will appear here -->
+    </div>
 
     <script src="script.js"></script>
 </body>
