@@ -21,6 +21,7 @@ const gameContainer = document.getElementById("game-container");
 const feedback = document.getElementById("feedback");
 const attemptsLeft = document.getElementById("attempts");
 const submitButton = document.getElementById("submit-btn");
+const correctAnswersContainer = document.getElementById("correct-answers");
 
 let selectedWords = [];
 let attempts = 4;
@@ -53,6 +54,7 @@ function checkGroup() {
 
   if (selectedWords.length !== 4) {
     feedback.textContent = "Select exactly 4 words!";
+    feedback.className = "error";
     return;
   }
 
@@ -62,15 +64,27 @@ function checkGroup() {
 
   if (allMatch) {
     feedback.textContent = `Correct! Group: ${category}`;
+    feedback.className = "success";
+
+    // Add the correct words to the correct answers section
+    const categoryDiv = document.createElement("div");
+    categoryDiv.className = "correct-category";
+    categoryDiv.textContent = `${category}: ${selectedWords.map(w => w.word).join(", ")}`;
+    correctAnswersContainer.appendChild(categoryDiv);
+
+    // Remove selected words from the game container
     selectedWords.forEach(word => {
       const div = [...gameContainer.children].find(el => el.textContent === word.word);
       if (div) div.remove();
     });
+
     selectedWords = [];
   } else {
     feedback.textContent = "Incorrect group!";
+    feedback.className = "error";
     attempts--;
     attemptsLeft.textContent = attempts;
+
     if (attempts === 0) {
       feedback.textContent = "Game Over! Try again.";
       submitButton.disabled = true;
