@@ -1,12 +1,20 @@
 const words = [
-  { word: "Benjy", category: "Fruits" },
-  { word: "Tally", category: "Fruits" },
+  { word: "Apple", category: "Fruits" },
+  { word: "Banana", category: "Fruits" },
   { word: "Carrot", category: "Vegetables" },
   { word: "Broccoli", category: "Vegetables" },
   { word: "Shark", category: "Animals" },
   { word: "Tiger", category: "Animals" },
   { word: "Guitar", category: "Instruments" },
   { word: "Drum", category: "Instruments" },
+  { word: "Orange", category: "Fruits" },
+  { word: "Piano", category: "Instruments" },
+  { word: "Lion", category: "Animals" },
+  { word: "Potato", category: "Vegetables" },
+  { word: "Flute", category: "Instruments" },
+  { word: "Whale", category: "Animals" },
+  { word: "Tomato", category: "Fruits" },
+  { word: "Cabbage", category: "Vegetables" }
 ];
 
 const gameContainer = document.getElementById("game-container");
