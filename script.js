@@ -17,7 +17,6 @@ const words = [
   { word: "Cabbage", category: "Vegetables" }
 ];
 
-
 const gameContainer = document.getElementById("game-container");
 const feedback = document.getElementById("feedback");
 const attemptsLeft = document.getElementById("attempts");
@@ -31,55 +30,68 @@ let attempts = 4;
 const shuffledWords = words.sort(() => Math.random() - 0.5);
 
 shuffledWords.forEach(item => {
-  const div = document.createElement("div");
-  div.className = "word-card";
-  div.textContent = item.word;
-  div.addEventListener("click", () => {
-    console.log(`Clicked: ${item.word}`); // Debugging
-    toggleSelection(div, item);
-  });
-  gameContainer.appendChild(div);
+    const div = document.createElement("div");
+    div.className = "word-card";
+    div.textContent = item.word;
+    div.addEventListener("click", () => toggleSelection(div, item));
+    gameContainer.appendChild(div);
 });
 
 function toggleSelection(div, word) {
-  if (div.classList.contains("selected")) {
-    div.classList.remove("selected");
-    selectedWords = selectedWords.filter(w => w.word !== word.word);
-  } else if (selectedWords.length < 4) {
-    div.classList.add("selected");
-    selectedWords.push(word);
-  }
+    if (div.classList.contains("selected")) {
+        div.classList.remove("selected");
+        selectedWords = selectedWords.filter(w => w.word !== word.word);
+    } else if (selectedWords.length < 4) {
+        div.classList.add("selected");
+        selectedWords.push(word);
+    }
 }
 
 submitButton.addEventListener("click", checkGroup);
 
 function checkGroup() {
-  // Prevent submission if no words are selected
-  if (selectedWords.length !== 4) {
-    feedback.textContent = "Select exactly 4 words!";
-    feedback.style.color = "red";
-    return;
-  }
+    if (selectedWords.length !== 4) {
+        feedback.textContent = "Select exactly 4 words!";
+        feedback.style.color = "red";
+        return;
+    }
 
-  // Check if all selected words are in the same category
-  const category = selectedWords[0].category;
-  const allMatch = selectedWords.every(word => word.category === category);
+    // Check if all selected words are in the same group
+    const group = selectedWords[0].group;
+    const allMatch = selectedWords.every(word => word.group === group);
 
-  if (allMatch) {
-    feedback.textContent = `Correct! Group: ${category}`;
-    feedback.style.color = "green";
+    if (allMatch) {
+        feedback.textContent = `Correct! Group: ${group}`;
+        feedback.style.color = "green";
 
-    // Add correct words to the correct answers section
-    const categoryDiv = document.createElement("div");
-    categoryDiv.className = "correct-category";
-    categoryDiv.textContent = `${category}: ${selectedWords.map(w => w.word).join(", ")}`;
-    correctAnswersContainer.appendChild(categoryDiv);
+        // Add the correct group to the "Correct Answers" section
+        const groupDiv = document.createElement("div");
+        groupDiv.className = "correct-group";
+        groupDiv.textContent = `${group}: ${selectedWords.map(w => w.word).join(", ")}`;
+        correctAnswersContainer.appendChild(groupDiv);
 
-    // Remove selected words from the game
-    selectedWords.forEach(word => {
-      const div = [...gameContainer.children].find(el => el.textContent === word.word);
-      if (div) div.remove();
-    });
+        // Remove the selected words from the game
+        selectedWords.forEach(word => {
+            const wordCard = [...gameContainer.children].find(el => el.textContent === word.word);
+            if (wordCard) wordCard.remove();
+        });
 
-    // Reset selected wor
+        selectedWords = [];
+    } else {
+        feedback.textContent = "Incorrect group!";
+        feedback.style.color = "red";
+        attempts--;
+        attemptsLeft.textContent = attempts;
+
+        if (attempts === 0) {
+            feedback.textContent = "Game Over! Try again.";
+            submitButton.disabled = true;
+        }
+    }
+
+    // Clear selections
+    document.querySelectorAll(".word-card.selected").forEach(div => div.classList.remove("selected"));
+    selectedWords = [];
+}
+
 
