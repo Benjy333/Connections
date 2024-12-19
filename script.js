@@ -1,21 +1,20 @@
-// Local Game Data: Words and Categories
 const words = [
-  { word: "Apple", category: "Fruits" },
-  { word: "Banana", category: "Fruits" },
-  { word: "Carrot", category: "Vegetables" },
-  { word: "Broccoli", category: "Vegetables" },
-  { word: "Shark", category: "Animals" },
-  { word: "Tiger", category: "Animals" },
-  { word: "Guitar", category: "Instruments" },
-  { word: "Drum", category: "Instruments" },
-  { word: "Orange", category: "Fruits" },
-  { word: "Piano", category: "Instruments" },
-  { word: "Lion", category: "Animals" },
-  { word: "Potato", category: "Vegetables" },
-  { word: "Flute", category: "Instruments" },
-  { word: "Whale", category: "Animals" },
-  { word: "Tomato", category: "Fruits" },
-  { word: "Cabbage", category: "Vegetables" }
+    { word: "Couch", group: "Ultimate Games Master" },
+    { word: "Bed", group: "Ultimate Games Master" },
+    { word: "TV", group: "Ultimate Games Master" },
+    { word: "TV Unit", group: "Ultimate Games Master" },
+    { word: "Chaise", group: "Cake Provider" },
+    { word: "Dining Table", group: "Cake Provider" },
+    { word: "Plants", group: "Cake Provider" },
+    { word: "Dining Chairs", group: "Cake Provider" },
+    { word: "Desk", group: "Action Man" },
+    { word: "Fridge", group: "Action Man" },
+    { word: "Washing Machine", group: "Action Man" },
+    { word: "IcE BaTh BaBy!!!", group: "Action Man" },
+    { word: "Electricity", group: "T Dog" },
+    { word: "WiFi", group: "T Dog" },
+    { word: "Gas", group: "T Dog" },
+    { word: "Mattress", group: "T Dog" },
 ];
 
 const gameContainer = document.getElementById("game-container");
