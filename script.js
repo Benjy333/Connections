@@ -17,6 +17,7 @@ const words = [
   { word: "Cabbage", category: "Vegetables" }
 ];
 
+
 const gameContainer = document.getElementById("game-container");
 const feedback = document.getElementById("feedback");
 const attemptsLeft = document.getElementById("attempts");
@@ -49,3 +50,36 @@ function toggleSelection(div, word) {
     selectedWords.push(word);
   }
 }
+
+submitButton.addEventListener("click", checkGroup);
+
+function checkGroup() {
+  // Prevent submission if no words are selected
+  if (selectedWords.length !== 4) {
+    feedback.textContent = "Select exactly 4 words!";
+    feedback.style.color = "red";
+    return;
+  }
+
+  // Check if all selected words are in the same category
+  const category = selectedWords[0].category;
+  const allMatch = selectedWords.every(word => word.category === category);
+
+  if (allMatch) {
+    feedback.textContent = `Correct! Group: ${category}`;
+    feedback.style.color = "green";
+
+    // Add correct words to the correct answers section
+    const categoryDiv = document.createElement("div");
+    categoryDiv.className = "correct-category";
+    categoryDiv.textContent = `${category}: ${selectedWords.map(w => w.word).join(", ")}`;
+    correctAnswersContainer.appendChild(categoryDiv);
+
+    // Remove selected words from the game
+    selectedWords.forEach(word => {
+      const div = [...gameContainer.children].find(el => el.textContent === word.word);
+      if (div) div.remove();
+    });
+
+    // Reset selected wor
+
