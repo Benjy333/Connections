@@ -1,5 +1,5 @@
 const words = [
-  { word: "Apple", category: "Fruits" },
+  { word: "Benjy", category: "Fruits" },
   { word: "Banana", category: "Fruits" },
   { word: "Carrot", category: "Vegetables" },
   { word: "Broccoli", category: "Vegetables" },
