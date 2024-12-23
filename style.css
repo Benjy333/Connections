@@ -1,3 +1,4 @@
+/* General body styling */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -7,11 +8,13 @@ body {
     padding: 0;
 }
 
+/* Header styling */
 h1 {
     color: #444;
     margin-top: 20px;
 }
 
+/* Game container */
 #game-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -25,18 +28,22 @@ h1 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Word cards */
 .word-card {
     background-color: #e0e0e0;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ccc;
     cursor: pointer;
     text-align: center;
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.2s;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .word-card:hover {
     background-color: #cfd8dc;
+    transform: scale(1.05);
 }
 
 .word-card.selected {
@@ -44,6 +51,7 @@ h1 {
     color: white;
 }
 
+/* Feedback styling */
 #feedback {
     font-weight: bold;
     margin: 10px;
@@ -57,6 +65,7 @@ h1 {
     color: #d32f2f; /* Red for error */
 }
 
+/* Submit button styling */
 #submit-btn {
     background-color: #1976d2;
     color: white;
@@ -64,4 +73,120 @@ h1 {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+#submit-btn:hover {
+    background-color: #1565c0;
+}
+
+#submit-btn:disabled {
+    background-color: #b0bec5;
+    cursor: not-allowed;
+}
+
+/* Correct answers section */
+#dynamic-answers {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 2px solid #ccc;
+    text-align: center;
+    font-size: 16px;
+}
+
+.answer-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.answer-row h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.answer-row p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Results screen */
+#results-screen {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 400px;
+}
+
+.result-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Difficulty colors */
+.result-block.easy {
+    background-color: #8bc34a; /* Green for easy */
+}
+
+.result-block.medium {
+    background-color: #ffeb3b; /* Yellow for medium */
+}
+
+.result-block.hard {
+    background-color: #2196f3; /* Blue for hard */
+}
+
+.result-block.tricky {
+    background-color: #9c27b0; /* Purple for tricky */
+}
+
+/* Modal container */
+#how-to-play-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal content box */
+#how-to-play-modal .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Close button */
+#how-to-play-modal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#how-to-play-modal .close-btn:hover {
+    color: #000;
+}
