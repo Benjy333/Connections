@@ -24,26 +24,11 @@ const shuffleButton = document.getElementById("shuffle-btn");
 const resultsScreen = document.getElementById("results-screen");
 const modal = document.getElementById("how-to-play-modal");
 const closeBtn = document.querySelector(".close-btn");
+const howToPlayButton = document.getElementById("how-to-play-btn");
 const attemptsElement = document.getElementById("attempts");
 
 let selectedWords = [];
 let attempts = 4;
-
-// Function to get the color based on difficulty
-function getDifficultyColor(difficulty) {
-    switch (difficulty) {
-        case "easy":
-            return "#8bc34a"; // Green
-        case "medium":
-            return "#ffeb3b"; // Yellow
-        case "hard":
-            return "#2196f3"; // Blue
-        case "tricky":
-            return "#9c27b0"; // Purple
-        default:
-            return "#ccc"; // Default gray
-    }
-}
 
 // Function to shuffle the grid
 function shuffleGrid() {
@@ -83,6 +68,22 @@ function updateResults(group, difficulty) {
     }
 
     resultsScreen.appendChild(resultRow);
+}
+
+// Function to get the color based on difficulty
+function getDifficultyColor(difficulty) {
+    switch (difficulty) {
+        case "easy":
+            return "#8bc34a"; // Green
+        case "medium":
+            return "#ffeb3b"; // Yellow
+        case "hard":
+            return "#2196f3"; // Blue
+        case "tricky":
+            return "#9c27b0"; // Purple
+        default:
+            return "#ccc"; // Default gray
+    }
 }
 
 // Event listener for the Submit button
@@ -131,12 +132,14 @@ submitButton.addEventListener("click", () => {
 shuffleButton.addEventListener("click", shuffleGrid);
 
 // Event listener for the How to Play button
-document.getElementById("how-to-play-btn").addEventListener("click", () => {
+howToPlayButton.addEventListener("click", () => {
     modal.style.display = "block";
 });
 
 // Close modal when clicking the close button
-closeBtn.addEventListener("click", () => (modal.style.display = "none"));
+closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+});
 
 // Close modal when clicking outside the modal
 window.addEventListener("click", (event) => {
