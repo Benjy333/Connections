@@ -19,12 +19,31 @@
     <button id="submit-btn">Submit Group</button>
     <p>Attempts Left: <span id="attempts">4</span></p>
 
-    <h2>Correct Answers</h2>
-    <div id="correct-answers">
-        <!-- Correct groups will appear here -->
+    <h2>Answers</h2>
+    <div id="dynamic-answers">
+        <!-- Dynamic answers will appear here -->
+    </div>
+
+    <h2>Results</h2>
+    <div id="results-screen">
+        <!-- Colored rows for success/failure will appear here -->
+    </div>
+
+    <button id="how-to-play-btn">How to Play</button>
+
+    <!-- Modal -->
+    <div id="how-to-play-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>How to Play</h2>
+            <p>Find groups of four items that share something in common.</p>
+            <ul>
+                <li>Select four items and tap <strong>'Submit'</strong> to check if your guess is correct.</li>
+                <li>Find the groups without making 4 mistakes!</li>
+            </ul>
+        </div>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
-
