@@ -18,125 +18,46 @@ const words = [
 ];
 
 const gameContainer = document.getElementById("game-container");
-const dynamicAnswers = document.getElementById("dynamic-answers");
-const resultsScreen = document.getElementById("results-screen");
+const modal = document.getElementById("how-to-play-modal");
+const closeBtn = document.querySelector(".close-btn");
 const feedback = document.getElementById("feedback");
-const submitButton = document.getElementById("submit-btn");
-let attempts = 4;
-let selectedWords = [];
-let solvedGroups = [];
 
-// Shuffle and render the words
-const shuffledWords = words.sort(() => Math.random() - 0.5);
-shuffledWords.forEach((item) => {
-    const div = document.createElement("div");
-    div.className = "word-card";
-    div.textContent = item.word;
-    div.addEventListener("click", () => toggleSelection(div, item));
-    gameContainer.appendChild(div);
-});
-
-function toggleSelection(div, word) {
-    if (div.classList.contains("selected")) {
-        div.classList.remove("selected");
-        selectedWords = selectedWords.filter((w) => w.word !== word.word);
-    } else if (selectedWords.length < 4) {
-        div.classList.add("selected");
-        selectedWords.push(word);
-    }
-}
-
-submitButton.addEventListener("click", () => {
-    if (selectedWords.length !== 4) {
-        feedback.textContent = "Select exactly 4 words!";
-        feedback.style.color = "red";
-        return;
-    }
-
-    const group = selectedWords[0].group;
-    const allMatch = selectedWords.every((word) => word.group === group);
-
-    if (allMatch) {
-        feedback.textContent = `Correct! Group: ${group}`;
-        feedback.style.color = "green";
-
-        // Add this group to dynamic answers
-        solvedGroups.push(group);
-        updateDynamicAnswers(group, selectedWords);
-
-        // Remove cards from the game board
-        selectedWords.forEach((word) => {
-            const card = [...gameContainer.children].find((el) => el.textContent === word.word);
-            if (card) card.remove();
-        });
-
-        // Check if all groups are solved
-        if (solvedGroups.length === 4) {
-            feedback.textContent = "Congratulations! You've solved all groups!";
-            showResultsScreen();
-        }
-    } else {
-        feedback.textContent = "Incorrect! Try again.";
-        feedback.style.color = "red";
-        attempts--;
-        document.getElementById("attempts").textContent = attempts;
-
-        if (attempts === 0) {
-            feedback.textContent = "Game Over! You've used all attempts.";
-            submitButton.disabled = true;
-            showResultsScreen();
-        }
-    }
-
-    // Clear selections
-    document.querySelectorAll(".word-card.selected").forEach((div) => div.classList.remove("selected"));
-    selectedWords = [];
-});
-
-function updateDynamicAnswers(group, words) {
-    const row = document.createElement("div");
-    row.className = "answer-row";
-    row.style.backgroundColor = getDifficultyColor(words[0].difficulty);
-
-    const heading = document.createElement("h3");
-    heading.textContent = group;
-
-    const wordsList = document.createElement("p");
-    wordsList.textContent = words.map((word) => word.word).join(", ");
-
-    row.appendChild(heading);
-    row.appendChild(wordsList);
-    dynamicAnswers.appendChild(row);
-}
-
-function getDifficultyColor(difficulty) {
-    switch (difficulty) {
-        case "easy":
-            return "#8bc34a"; // Green
-        case "medium":
-            return "#ffeb3b"; // Yellow
-        case "hard":
-            return "#2196f3"; // Blue
-        case "tricky":
-            return "#9c27b0"; // Purple
-        default:
-            return "#ccc"; // Default gray
-    }
-}
-
-function showResultsScreen() {
-    solvedGroups.forEach((group) => {
-        const resultRow = document.createElement("div");
-        resultRow.className = "result-row";
-
-        const blocks = words.filter((word) => word.group === group);
-        blocks.forEach((word) => {
-            const block = document.createElement("div");
-            block.className = "result-block";
-            block.style.backgroundColor = getDifficultyColor(word.difficulty);
-            resultRow.appendChild(block);
-        });
-
-        resultsScreen.appendChild(resultRow);
+// Function to shuffle and render the grid
+function shuffleGrid() {
+    const shuffledWords = words.sort(() => Math.random() - 0.5);
+    gameContainer.innerHTML = "";
+    shuffledWords.forEach((item) => {
+        const div = document.createElement("div");
+        div.className = "word-card";
+        div.textContent = item.word;
+        gameContainer.appendChild(div);
     });
 }
+
+// Event handler for button clicks
+document.body.addEventListener("click", (event) => {
+    const buttonId = event.target.id;
+
+    if (buttonId === "submit-btn") {
+        feedback.textContent = "Submit button clicked!";
+        feedback.style.color = "green";
+        // Add your submit logic here
+    } else if (buttonId === "shuffle-btn") {
+        shuffleGrid();
+        feedback.textContent = "Grid shuffled!";
+        feedback.style.color = "orange";
+    } else if (buttonId === "how-to-play-btn") {
+        modal.style.display = "block";
+    }
+});
+
+// Close modal when the close button is clicked
+closeBtn.addEventListener("click", () => (modal.style.display = "none"));
+
+// Close modal when clicking outside the modal
+window.addEventListener("click", (event) => {
+    if (event.target === modal) modal.style.display = "none";
+});
+
+// Initial grid render
+shuffleGrid();
