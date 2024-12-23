@@ -28,12 +28,14 @@ const howToPlayButton = document.getElementById("how-to-play-btn");
 const attemptsElement = document.getElementById("attempts");
 
 let selectedWords = [];
+let remainingWords = [...words]; // Track uncompleted words
 let attempts = 4;
+let groupsCompleted = 0;
 
-// Function to shuffle the grid
+// Function to shuffle the remaining grid
 function shuffleGrid() {
-    const shuffledWords = words.sort(() => Math.random() - 0.5);
-    gameContainer.innerHTML = "";
+    const shuffledWords = remainingWords.sort(() => Math.random() - 0.5);
+    gameContainer.innerHTML = ""; // Clear the grid
     shuffledWords.forEach((item) => {
         const div = document.createElement("div");
         div.className = "word-card";
@@ -52,21 +54,38 @@ function toggleSelection(div, word) {
         div.classList.add("selected");
         selectedWords.push(word);
     }
+
+    // Provide a hint if only one word is needed
+    if (selectedWords.length === 3) {
+        const possibleGroup = selectedWords[0].group;
+        const hintMatch = remainingWords.filter(
+            (w) => w.group === possibleGroup && !selectedWords.includes(w)
+        );
+        if (hintMatch.length === 1) {
+            feedback.textContent = "One away!";
+            feedback.style.color = "orange";
+        } else {
+            feedback.textContent = "";
+        }
+    } else {
+        feedback.textContent = "";
+    }
 }
 
 // Function to update results with colored boxes
-function updateResults(group, difficulty) {
+function updateResults(isSuccess, group, difficulty) {
     const resultRow = document.createElement("div");
     resultRow.className = "result-row";
 
     // Create 4 blocks for the group
-    for (let i = 0; i < 4; i++) {
+    selectedWords.forEach((word) => {
         const block = document.createElement("div");
-        block.className = `result-block ${difficulty}`;
-        block.style.backgroundColor = getDifficultyColor(difficulty);
+        block.className = `result-block ${word.difficulty}`;
+        block.style.backgroundColor = isSuccess ? getDifficultyColor(difficulty) : getDifficultyColor(word.difficulty);
         resultRow.appendChild(block);
-    }
+    });
 
+    // Append to results screen
     resultsScreen.appendChild(resultRow);
 }
 
@@ -102,23 +121,39 @@ submitButton.addEventListener("click", () => {
         feedback.textContent = `Correct! Group: ${group}`;
         feedback.style.color = "green";
 
-        // Update results screen
-        updateResults(group, difficulty);
+        // Update results screen for success
+        updateResults(true, group, difficulty);
 
-        // Remove selected words from the grid
-        selectedWords.forEach((word) => {
-            const card = [...gameContainer.children].find((el) => el.textContent === word.word);
-            if (card) card.remove();
-        });
+        // Remove selected words from remainingWords
+        remainingWords = remainingWords.filter((word) => !selectedWords.includes(word));
+
+        // Increment groups completed
+        groupsCompleted++;
+
+        // Clear selected words
         selectedWords = [];
+
+        // Check if the puzzle is completed
+        if (groupsCompleted === 4) {
+            feedback.textContent = "Puzzle Complete! See your results below.";
+            feedback.style.color = "green";
+            resultsScreen.style.display = "block"; // Show results screen
+        } else {
+            shuffleGrid(); // Re-render remaining grid
+        }
     } else {
         feedback.textContent = "Incorrect! Try again.";
         feedback.style.color = "red";
+
+        // Update results screen for failure
+        updateResults(false);
+
         attempts--;
         attemptsElement.textContent = attempts;
 
         if (attempts === 0) {
             feedback.textContent = "Game Over! You've used all attempts.";
+            resultsScreen.style.display = "block"; // Show results screen
             submitButton.disabled = true;
         }
     }
