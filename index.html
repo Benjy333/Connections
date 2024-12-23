@@ -15,10 +15,25 @@
         <!-- Words will be dynamically added here -->
     </div>
 
-    <button id="submit-btn">Submit Group</button>
+    <!-- Buttons -->
     <button id="shuffle-btn">Shuffle Grid</button>
     <p id="feedback"></p>
+    <button id="submit-btn">Submit Group</button>
+    <p>Attempts Left: <span id="attempts">4</span></p>
 
+    <!-- Dynamic Answers Section -->
+    <h2>Answers</h2>
+    <div id="dynamic-answers">
+        <!-- Dynamic answers will appear here -->
+    </div>
+
+    <!-- Results Screen -->
+    <h2>Results</h2>
+    <div id="results-screen">
+        <!-- Colored rows for success/failure will appear here -->
+    </div>
+
+    <!-- How to Play Button -->
     <button id="how-to-play-btn" class="how-to-play-button">How to Play</button>
 
     <!-- Modal -->
@@ -30,6 +45,13 @@
             <ul>
                 <li>Select four items and tap <strong>'Submit'</strong> to check if your guess is correct.</li>
                 <li>Find the groups without making 4 mistakes!</li>
+                <li>Each group is assigned a color based on its difficulty:</li>
+                <ul>
+                    <li><span style="color: #8bc34a;">Easy</span>: Green</li>
+                    <li><span style="color: #ffeb3b;">Medium</span>: Yellow</li>
+                    <li><span style="color: #2196f3;">Hard</span>: Blue</li>
+                    <li><span style="color: #9c27b0;">Tricky</span>: Purple</li>
+                </ul>
             </ul>
             <p>Example Categories:</p>
             <ul>
