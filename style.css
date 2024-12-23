@@ -66,6 +66,10 @@ h1 {
     color: #d32f2f;
 }
 
+#feedback.hint {
+    color: #ff9800;
+}
+
 /* Button styling */
 button {
     background-color: #1976d2;
@@ -98,40 +102,19 @@ button:disabled {
     background-color: #f57c00;
 }
 
-/* Correct answers section */
-#dynamic-answers {
+/* Results screen */
+#results-screen {
     margin-top: 20px;
     padding: 10px;
     border-top: 2px solid #ccc;
     text-align: center;
-    font-size: 16px;
-}
-
-.answer-row {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: center;
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-/* Results screen */
-#results-screen {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 20px auto;
-    width: 80%;
-    max-width: 400px;
 }
 
 .result-row {
     display: flex;
     gap: 10px;
     justify-content: center;
+    margin-bottom: 10px;
 }
 
 .result-block {
@@ -157,7 +140,7 @@ button:disabled {
     background-color: #9c27b0;
 }
 
-/* Modal container */
+/* Modal */
 #how-to-play-modal {
     display: none;
     position: fixed;
@@ -173,7 +156,6 @@ button:disabled {
     align-items: center;
 }
 
-/* Modal content box */
 #how-to-play-modal .modal-content {
     background-color: white;
     margin: 20px;
@@ -183,7 +165,6 @@ button:disabled {
     max-width: 600px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: left;
-    animation: fadeIn 0.3s ease-in-out;
 }
 
 #how-to-play-modal .close-btn {
@@ -194,7 +175,6 @@ button:disabled {
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-    transition: color 0.3s ease;
 }
 
 #how-to-play-modal .close-btn:hover {
@@ -204,6 +184,7 @@ button:disabled {
 /* Responsive adjustments */
 @media (max-width: 600px) {
     #game-container {
+        grid-template-columns: repeat(4, 1fr);
         gap: 5px;
     }
 
