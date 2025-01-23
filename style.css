@@ -52,6 +52,14 @@ h1 {
     color: white;
 }
 
+/* Completed cards styling (if needed in the grid) */
+.word-card.completed {
+    background-color: #d6d6d6;
+    color: #757575;
+    pointer-events: none;
+    font-style: italic;
+}
+
 /* Feedback styling */
 #feedback {
     font-weight: bold;
@@ -110,33 +118,43 @@ button:disabled {
     text-align: center;
 }
 
-.result-row {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.result-block {
-    width: 50px;
-    height: 50px;
+/* Completed groups styling */
+.completed-group {
+    margin: 10px auto;
+    padding: 10px;
     border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    color: #000;
+}
+.completed-group h3 {
+    margin: 0;
+    font-size: 18px;
+}
+.completed-group p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    font-style: italic;
 }
 
 /* Difficulty colors */
-.result-block.easy {
+.result-block.easy,
+.completed-group.easy {
     background-color: #8bc34a;
 }
 
-.result-block.medium {
+.result-block.medium,
+.completed-group.medium {
     background-color: #ffeb3b;
 }
 
-.result-block.hard {
+.result-block.hard,
+.completed-group.hard {
     background-color: #2196f3;
 }
 
-.result-block.tricky {
+.result-block.tricky,
+.completed-group.tricky {
     background-color: #9c27b0;
 }
 
