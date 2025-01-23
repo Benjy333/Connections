@@ -28,11 +28,11 @@ const howToPlayButton = document.getElementById("how-to-play-btn");
 const attemptsElement = document.getElementById("attempts");
 
 let selectedWords = [];
-let remainingWords = [...words]; // Track uncompleted words
+let remainingWords = [...words];
 let attempts = 4;
 let groupsCompleted = 0;
 
-// Function to shuffle the remaining grid
+// Shuffle grid function
 function shuffleGrid() {
     const shuffledWords = remainingWords.sort(() => Math.random() - 0.5);
     gameContainer.innerHTML = ""; // Clear the grid
@@ -45,7 +45,7 @@ function shuffleGrid() {
     });
 }
 
-// Function to toggle word selection
+// Toggle word selection
 function toggleSelection(div, word) {
     if (div.classList.contains("selected")) {
         div.classList.remove("selected");
@@ -54,42 +54,29 @@ function toggleSelection(div, word) {
         div.classList.add("selected");
         selectedWords.push(word);
     }
-
-    // Provide a hint if only one word is needed
-    if (selectedWords.length === 3) {
-        const possibleGroup = selectedWords[0].group;
-        const hintMatch = remainingWords.filter(
-            (w) => w.group === possibleGroup && !selectedWords.includes(w)
-        );
-        if (hintMatch.length === 1) {
-            feedback.textContent = "One away!";
-            feedback.style.color = "orange";
-        } else {
-            feedback.textContent = "";
-        }
-    } else {
-        feedback.textContent = "";
-    }
 }
 
-// Function to update results with colored boxes
-function updateResults(isSuccess, group, difficulty) {
-    const resultRow = document.createElement("div");
-    resultRow.className = "result-row";
+// Display the correct group at the top
+function displayCorrectGroup(group, difficulty) {
+    const correctGroupDiv = document.createElement("div");
+    correctGroupDiv.className = `completed-group ${difficulty}`;
+    correctGroupDiv.style.backgroundColor = getDifficultyColor(difficulty);
 
-    // Create 4 blocks for the group
-    selectedWords.forEach((word) => {
-        const block = document.createElement("div");
-        block.className = `result-block ${word.difficulty}`;
-        block.style.backgroundColor = isSuccess ? getDifficultyColor(difficulty) : getDifficultyColor(word.difficulty);
-        resultRow.appendChild(block);
-    });
+    const groupTitle = document.createElement("h3");
+    groupTitle.textContent = group.toUpperCase();
 
-    // Append to results screen
-    resultsScreen.appendChild(resultRow);
+    const groupWords = document.createElement("p");
+    groupWords.textContent = selectedWords.map((w) => w.word).join(", ");
+
+    correctGroupDiv.appendChild(groupTitle);
+    correctGroupDiv.appendChild(groupWords);
+
+    // Add to the results section
+    resultsScreen.style.display = "block";
+    resultsScreen.appendChild(correctGroupDiv);
 }
 
-// Function to get the color based on difficulty
+// Get the color for the group difficulty
 function getDifficultyColor(difficulty) {
     switch (difficulty) {
         case "easy":
@@ -105,7 +92,7 @@ function getDifficultyColor(difficulty) {
     }
 }
 
-// Event listener for the Submit button
+// Submit button functionality
 submitButton.addEventListener("click", () => {
     if (selectedWords.length !== 4) {
         feedback.textContent = "Select exactly 4 words!";
@@ -121,23 +108,19 @@ submitButton.addEventListener("click", () => {
         feedback.textContent = `Correct! Group: ${group}`;
         feedback.style.color = "green";
 
-        // Update results screen for success
-        updateResults(true, group, difficulty);
+        // Mark the group as complete
+        displayCorrectGroup(group, difficulty);
 
-        // Remove selected words from remainingWords
+        // Remove selected words from the grid
         remainingWords = remainingWords.filter((word) => !selectedWords.includes(word));
 
         // Increment groups completed
         groupsCompleted++;
 
-        // Clear selected words
-        selectedWords = [];
-
-        // Check if the puzzle is completed
+        // Check if the game is complete
         if (groupsCompleted === 4) {
-            feedback.textContent = "Puzzle Complete! See your results below.";
+            feedback.textContent = "Puzzle Complete! See your results above.";
             feedback.style.color = "green";
-            resultsScreen.style.display = "block"; // Show results screen
         } else {
             shuffleGrid(); // Re-render remaining grid
         }
@@ -145,15 +128,11 @@ submitButton.addEventListener("click", () => {
         feedback.textContent = "Incorrect! Try again.";
         feedback.style.color = "red";
 
-        // Update results screen for failure
-        updateResults(false);
-
         attempts--;
         attemptsElement.textContent = attempts;
 
         if (attempts === 0) {
             feedback.textContent = "Game Over! You've used all attempts.";
-            resultsScreen.style.display = "block"; // Show results screen
             submitButton.disabled = true;
         }
     }
@@ -163,20 +142,16 @@ submitButton.addEventListener("click", () => {
     selectedWords = [];
 });
 
-// Event listener for the Shuffle button
+// Shuffle button functionality
 shuffleButton.addEventListener("click", shuffleGrid);
 
-// Event listener for the How to Play button
+// Modal functionality
 howToPlayButton.addEventListener("click", () => {
     modal.style.display = "block";
 });
-
-// Close modal when clicking the close button
 closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
 });
-
-// Close modal when clicking outside the modal
 window.addEventListener("click", (event) => {
     if (event.target === modal) {
         modal.style.display = "none";
